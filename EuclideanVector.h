@@ -1,15 +1,28 @@
 #ifndef EVEC_H
 #define EVEC_H
 
+#include <iterator>
+#include <algorithm>
+
 namespace evec {
     class EuclideanVector {
     public:
-        //basic constructor
+        //default constructor
         EuclideanVector();
 
+        //Basic dim constructor
         EuclideanVector(unsigned int dim);
 
-        //7 specific constructor
+        //Basic dim, mag constructor
+        EuclideanVector(unsigned int dim, double mag);
+
+        //Iterator constructor
+        template <typename Itr>
+        EuclideanVector(Itr start, Itr end){
+            int dimension_ = std::distance(start, end);
+            magnitude_ = new double[dimension_];
+            std::copy(start, end, magnitude_);
+        }
 
         //destructor
         ~EuclideanVector();
@@ -21,10 +34,10 @@ namespace evec {
         EuclideanVector(EuclideanVector&& euclideanVector);
 
         //get dimension size
-        static inline unsigned int getNumDimension();
+        inline unsigned int getNumDimension() {return dimension_; }
 
         //get magnitude at index
-        static inline double get(unsigned int i);
+        inline double get(unsigned int i) { return magnitude_[i] };
 
         //calc norm of the vector
         double getEuclideanNorm();
@@ -34,7 +47,7 @@ namespace evec {
     
     private:        
         unsigned int dimension_;
-        unsigned double* magnitude_;            
+        double* magnitude_;            
     };
 }
 
