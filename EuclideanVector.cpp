@@ -1,16 +1,12 @@
-#include <iostream>
-#include <cmath>
 #include "EuclideanVector.h"
 
 //Constructor - Part 1 - Less than basic
-evec::EuclideanVector::EuclideanVector(): EuclideanVector{1} {}
+evec::EuclideanVector::EuclideanVector(): EuclideanVector(1) {}
 
-evec::EuclideanVector::EuclideanVector(unsigned int dim): EuclideanVector {dim, 0.0} {}
+evec::EuclideanVector::EuclideanVector(unsigned int dim): EuclideanVector (dim, 0.0) {}
 
 //Constructor - Part 2 - Basic
-evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag):
-    dimension_{dim}
-{
+evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag): dimension_{dim} {
     std::cout << "Constructing with dim and mag\n";
     magnitude_ = new double[dim];
     
@@ -20,17 +16,35 @@ evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag):
     }
 }
 
-//Constructor - Part 3 - Iterator - in .h file
+//Constructor - Part 3 - Iterator
+evec::EuclideanVector::EuclideanVector(std::list<double>::iterator start, std::list<double>::iterator end){
+    std::cout << "List iterator constructor\n";
+    dimension_ = std::distance(start, end);
+    magnitude_ = new double[dimension_];
+    std::copy(start, end, magnitude_);
+}
+
+evec::EuclideanVector::EuclideanVector(std::vector<double>::iterator start, std::vector<double>::iterator end){
+    std::cout << "Vector iterator constructor\n";
+    dimension_ = std::distance(start, end);
+    magnitude_ = new double[dimension_];
+    std::copy(start, end, magnitude_);
+}
 
 //Constructor - Part 4 - initialiser list
+evec::EuclideanVector::EuclideanVector(std::initializer_list<double> mag){
+    std::cout << "Initializer list constructor\n";
+    dimension_ = std::distance(mag.begin(),mag.end());
+    magnitude_ = new double[dimension_];
+    std::copy(mag.begin(), mag.end(), magnitude_);
+}
 
 //Constructor - copy
 
 //Constructor - move
 
 //Deconstructor
-evec::EuclideanVector::~EuclideanVector()
-{
+evec::EuclideanVector::~EuclideanVector(){
     std::cout << "Deconstructing\n";
     delete [] magnitude_;
 }
@@ -70,7 +84,7 @@ evec::EuclideanVector& evec::EuclideanVector::operator/= (const double& b){
 }
 
 //Euclidean Norm
-double evec::EuclideanVector::getEuclideanNorm(){
+double evec::EuclideanVector::getEuclideanNorm() const{
     double norm = 0;
     for (auto i = 0U; i < dimension_; i++){
         norm += std::pow(magnitude_[i], 2);
@@ -79,8 +93,19 @@ double evec::EuclideanVector::getEuclideanNorm(){
     return norm;
 }
 
+evec::EuclideanVector evec::EuclideanVector::createUnitVector() const{
+    auto norm = getEuclideanNorm();
+    assert (norm != 0);
+    evec::EuclideanVector retVec(dimension_);
+    for (auto i = 0U; i < dimension_; ++i){
+        retVec.magnitude_[i] = magnitude_[i]/norm;
+    }
+    return retVec;
+}
+
 //Operator <<
 std::ostream& evec::operator<<(std::ostream& out, const evec::EuclideanVector& b){
+    assert(b.dimension_ != 0);
     auto dim = b.dimension_;
     out << "[";
     for (auto i = 0U; i < dim; i++){
@@ -94,6 +119,26 @@ std::ostream& evec::operator<<(std::ostream& out, const evec::EuclideanVector& b
     return out;
 }
 
+//Operator ==
+bool evec::operator==(const evec::EuclideanVector& a, const evec::EuclideanVector& b){
+    if (a.dimension_ == b.dimension_){
+        for (auto i = 0U; i < a.dimension_; ++i){
+            if (a.magnitude_[i] != b.magnitude_[i]){
+                return false;
+            }
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
 
-
+//Operator !=
+bool evec::operator!=(const evec::EuclideanVector& a, const evec::EuclideanVector& b){
+    if (a == b){
+        return false;
+    } else {
+        return true;
+    }
+}
 

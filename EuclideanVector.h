@@ -2,8 +2,12 @@
 #define EVEC_H
 
 #include <iostream>
-#include <iterator>
 #include <algorithm>
+#include <cmath>
+#include <list>
+#include <vector>
+#include <iterator>
+#include <initializer_list>
 #include <assert.h>
 
 namespace evec {
@@ -19,13 +23,11 @@ namespace evec {
         EuclideanVector(unsigned int dim, double mag);
 
         //Iterator constructor
-        template <typename Itr>
-        EuclideanVector(Itr start, Itr end){
-            std::cout << "Iterator constructor\n";
-            dimension_ = std::distance(start, end);
-            magnitude_ = new double[dimension_];
-            std::copy(start, end, magnitude_);
-        }
+        EuclideanVector(std::list<double>::iterator start, std::list<double>::iterator end);
+        EuclideanVector(std::vector<double>::iterator start, std::vector<double>::iterator end);
+
+        //Initialiser List constructor
+        EuclideanVector(std::initializer_list<double> mag);
 
         //destructor
         ~EuclideanVector();
@@ -36,39 +38,41 @@ namespace evec {
         // //move constructor
         // EuclideanVector(EuclideanVector&& euclideanVector);
 
-        //operator +=
+        //operators
         EuclideanVector& operator+= (const EuclideanVector& b);
-
-        //operator -=
         EuclideanVector& operator-= (const EuclideanVector& b);
-
-        //operator *=
         EuclideanVector& operator*= (const double& b);
-        
-        //operator /=
         EuclideanVector& operator/= (const double& b);
+        inline double operator[] (const unsigned int& b) const { assert(b < dimension_); return this->magnitude_[b]; }
+        inline double& operator[] (const unsigned int& b) { assert(b < dimension_); return this->magnitude_[b]; }
 
         //get dimension size
-        inline unsigned int getNumDimensions() {return dimension_;}
+        inline unsigned int getNumDimensions() const {return dimension_;}
 
         //get magnitude at index
-        inline double get(unsigned int i) {assert(i < dimension_); return magnitude_[i];}
+        inline double get(unsigned int i) const {assert(i < dimension_); return magnitude_[i];}
 
         //calc norm of the vector
-        double getEuclideanNorm();
+        double getEuclideanNorm() const;
 
-        //create a new vector by magnitude divided euclidean norm
-        // EuclideanVector& createUnitVector();
+        //create a new vector that contains magnitude divided euclidean norm
+        EuclideanVector createUnitVector() const;
 
-        //operator <<
+        //Non-member operators
         friend std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);
+        friend bool operator==(const EuclideanVector& a, const EuclideanVector& b);
+        friend bool operator!=(const EuclideanVector& a, const EuclideanVector& b);
 
-            
     private:        
         unsigned int dimension_;
         double* magnitude_;            
     };
-    std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);                    
+
+    //Non member function operators
+    std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);  
+    bool operator==(const EuclideanVector& a, const EuclideanVector& b);
+    bool operator!=(const EuclideanVector& a, const EuclideanVector& b);
+
 }
 
 #endif

@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <list>
 #include "EuclideanVector.h"
 
 int main() {
@@ -24,13 +21,21 @@ int main() {
 	evec::EuclideanVector e{a2.begin(),a2.end()};
     std::cout<< e << "\n";
 
+    evec::EuclideanVector e2{a2.begin(), a2.end()};
+    if (a != b){
+        std::cout << "a != b is true\n";
+    }
+    if (e == e2){
+        std::cout << "e == e2 is true\n";
+    }
+
 	// // use the copy constructor
 	// evec::EuclideanVector f{e};
 	
 	std::cout << a.getNumDimensions() << ": " << a << std::endl;
 	std::cout << "D1:" << b.get(1) << " " << b << std::endl;
 	std::cout << c << " Euclidean Norm = " << c.getEuclideanNorm() << std::endl;
-	// std::cout << d << " Unit Vector: " << d.createUnitVector() << " L = " << d.createUnitVector().getEuclideanNorm() << std::endl;
+	std::cout << d << " Unit Vector: " << d.createUnitVector() << " L = " << d.createUnitVector().getEuclideanNorm() << std::endl;
 	std::cout << e << std::endl;
 	// std::cout << f << std::endl;
 
@@ -65,9 +70,9 @@ int main() {
 	// 		std::cout << d << std::endl;
 	// }
 
-	// // list initialisation
-	// evec::EuclideanVector k {1, 2, 3};
-	// std::cout << k << std::endl;
+	// list initialisation
+	evec::EuclideanVector k {1, 2, 3};
+	std::cout << k << std::endl;
 }
 
 // The correct output is:
