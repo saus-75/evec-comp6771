@@ -32,8 +32,8 @@ namespace evec {
         //destructor
         ~EuclideanVector();
     
-        // //copy constructor
-        // EuclideanVector(const EuclideanVector& euclideanVector);
+        //copy constructor
+        EuclideanVector(const EuclideanVector& og);
 
         // //move constructor
         // EuclideanVector(EuclideanVector&& euclideanVector);

@@ -29,15 +29,15 @@ int main() {
         std::cout << "e == e2 is true\n";
     }
 
-	// // use the copy constructor
-	// evec::EuclideanVector f{e};
+	// use the copy constructor
+	evec::EuclideanVector f{e};
 	
 	std::cout << a.getNumDimensions() << ": " << a << std::endl;
 	std::cout << "D1:" << b.get(1) << " " << b << std::endl;
 	std::cout << c << " Euclidean Norm = " << c.getEuclideanNorm() << std::endl;
 	std::cout << d << " Unit Vector: " << d.createUnitVector() << " L = " << d.createUnitVector().getEuclideanNorm() << std::endl;
 	std::cout << e << std::endl;
-	// std::cout << f << std::endl;
+	std::cout << f << std::endl;
 
 	// // test the move constructor
 	// evec::EuclideanVector g = std::move(f);

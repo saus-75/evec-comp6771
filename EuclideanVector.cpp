@@ -40,6 +40,13 @@ evec::EuclideanVector::EuclideanVector(std::initializer_list<double> mag){
 }
 
 //Constructor - copy
+evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og): dimension_{og.dimension_} {
+    std::cout << "copy constructor\n";
+    magnitude_ = new double[dimension_];
+    for (auto i = 0U; i < dimension_; ++i){
+        magnitude_[i] = og.magnitude_[i];
+    }
+}
 
 //Constructor - move
 
