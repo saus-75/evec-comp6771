@@ -6,27 +6,32 @@
 int main() {
 	//constructors
 	evec::EuclideanVector a(2);
-    std::cout << a << "\n";
-	std::list<double> l {1,2,3};
+    std::cout<< a << "\n";
+	
+    std::list<double> l {1,2,3};
 	evec::EuclideanVector b{l.begin(),l.end()};
+    std::cout<< b << "\n";
 
 	std::vector<double> v2 {4,5,6,7};
 	evec::EuclideanVector c{v2.begin(),v2.end()};
+    std::cout<< c << "\n";
 
 	std::vector<double> a1 {5,4,3,2,1};
 	evec::EuclideanVector d{a1.begin(),a1.end()};
+    std::cout<< d << "\n";
 
 	std::list<double> a2 {9,0,8,6,7};
 	evec::EuclideanVector e{a2.begin(),a2.end()};
+    std::cout<< e << "\n";
 
 	// // use the copy constructor
 	// evec::EuclideanVector f{e};
 	
-	// std::cout << a.getNumDimensions() << ": " << a << std::endl;
-	// std::cout << "D1:" << b.get(1) << " " << b << std::endl;
-	// std::cout << c << " Euclidean Norm = " << c.getEuclideanNorm() << std::endl;
+	std::cout << a.getNumDimensions() << ": " << a << std::endl;
+	std::cout << "D1:" << b.get(1) << " " << b << std::endl;
+	std::cout << c << " Euclidean Norm = " << c.getEuclideanNorm() << std::endl;
 	// std::cout << d << " Unit Vector: " << d.createUnitVector() << " L = " << d.createUnitVector().getEuclideanNorm() << std::endl;
-	// std::cout << e << std::endl;
+	std::cout << e << std::endl;
 	// std::cout << f << std::endl;
 
 	// // test the move constructor

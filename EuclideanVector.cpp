@@ -5,12 +5,13 @@
 //Constructor - Part 1 - Less than basic
 evec::EuclideanVector::EuclideanVector(): EuclideanVector{1} {}
 
-evec::EuclideanVector::EuclideanVector(const unsigned int& dim): EuclideanVector {dim, 0.0} {}
+evec::EuclideanVector::EuclideanVector(unsigned int dim): EuclideanVector {dim, 0.0} {}
 
 //Constructor - Part 2 - Basic
-evec::EuclideanVector::EuclideanVector(const unsigned int& dim, const double& mag):
+evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag):
     dimension_{dim}
 {
+    std::cout << "Constructing with dim and mag\n";
     magnitude_ = new double[dim];
     
     for (auto i = 0U; i < dimension_; ++i)
@@ -69,7 +70,7 @@ evec::EuclideanVector& evec::EuclideanVector::operator/= (const double& b){
 }
 
 //Euclidean Norm
-double evec::EuclideanVector::getEuclideanNorm() const{
+double evec::EuclideanVector::getEuclideanNorm(){
     double norm = 0;
     for (auto i = 0U; i < dimension_; i++){
         norm += std::pow(magnitude_[i], 2);
@@ -79,14 +80,14 @@ double evec::EuclideanVector::getEuclideanNorm() const{
 }
 
 //Operator <<
-std::ostream& operator<<(std::ostream& out, const evec::EuclideanVector& b){
-    auto dim = b.getNumDimension();
+std::ostream& evec::operator<<(std::ostream& out, const evec::EuclideanVector& b){
+    auto dim = b.dimension_;
     out << "[";
     for (auto i = 0U; i < dim; i++){
         if (i != (dim - 1)){
-            out << b.get(i) << " ";
+            out << b.magnitude_[i] << " ";
         } else {
-            out << b.get(i);
+            out << b.magnitude_[i];
         }
     }  
     out << "]";

@@ -13,15 +13,16 @@ namespace evec {
         EuclideanVector();
 
         //Basic dim constructor
-        EuclideanVector(const unsigned int& dim);
+        EuclideanVector(unsigned int dim);
 
         //Basic dim, mag constructor
-        EuclideanVector(const unsigned int& dim, const double& mag);
+        EuclideanVector(unsigned int dim, double mag);
 
         //Iterator constructor
         template <typename Itr>
-        EuclideanVector(const Itr& start, const Itr& end){
-            int dimension_ = std::distance(start, end);
+        EuclideanVector(Itr start, Itr end){
+            std::cout << "Iterator constructor\n";
+            dimension_ = std::distance(start, end);
             magnitude_ = new double[dimension_];
             std::copy(start, end, magnitude_);
         }
@@ -48,13 +49,13 @@ namespace evec {
         EuclideanVector& operator/= (const double& b);
 
         //get dimension size
-        inline unsigned int getNumDimension() const {return dimension_;}
+        inline unsigned int getNumDimensions() {return dimension_;}
 
         //get magnitude at index
-        inline double get(const unsigned int& i) const {assert(i < dimension_); return magnitude_[i];}
+        inline double get(unsigned int i) {assert(i < dimension_); return magnitude_[i];}
 
         //calc norm of the vector
-        double getEuclideanNorm() const;
+        double getEuclideanNorm();
 
         //create a new vector by magnitude divided euclidean norm
         // EuclideanVector& createUnitVector();
@@ -66,7 +67,8 @@ namespace evec {
     private:        
         unsigned int dimension_;
         double* magnitude_;            
-    };                    
+    };
+    std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);                    
 }
 
 #endif
