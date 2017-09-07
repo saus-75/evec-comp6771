@@ -29,14 +29,14 @@ namespace evec {
         //Initialiser List constructor
         EuclideanVector(std::initializer_list<double> mag);
 
-        //destructor
-        ~EuclideanVector();
-    
         //copy constructor
         EuclideanVector(const EuclideanVector& og);
 
-        // //move constructor
-        // EuclideanVector(EuclideanVector&& euclideanVector);
+        //move constructor
+        EuclideanVector(EuclideanVector&& og);
+        
+        //destructor
+        ~EuclideanVector();
 
         //operators
         EuclideanVector& operator+= (const EuclideanVector& b);
@@ -45,6 +45,10 @@ namespace evec {
         EuclideanVector& operator/= (const double& b);
         inline double operator[] (const unsigned int& b) const { assert(b < dimension_); return this->magnitude_[b]; }
         inline double& operator[] (const unsigned int& b) { assert(b < dimension_); return this->magnitude_[b]; }
+
+        //type casting
+        operator std::vector<double>() const;
+        operator std::list<double>() const;
 
         //get dimension size
         inline unsigned int getNumDimensions() const {return dimension_;}

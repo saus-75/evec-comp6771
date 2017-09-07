@@ -1,12 +1,15 @@
 #include "EuclideanVector.h"
 
 //Constructor - Part 1 - Less than basic
-evec::EuclideanVector::EuclideanVector(): EuclideanVector(1) {}
+evec::EuclideanVector::EuclideanVector(): 
+    EuclideanVector(1) {}
 
-evec::EuclideanVector::EuclideanVector(unsigned int dim): EuclideanVector (dim, 0.0) {}
+evec::EuclideanVector::EuclideanVector(unsigned int dim): 
+    EuclideanVector (dim, 0.0) {}
 
 //Constructor - Part 2 - Basic
-evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag): dimension_{dim} {
+evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag): 
+    dimension_{dim} {
     std::cout << "Constructing with dim and mag\n";
     magnitude_ = new double[dim];
     
@@ -40,7 +43,8 @@ evec::EuclideanVector::EuclideanVector(std::initializer_list<double> mag){
 }
 
 //Constructor - copy
-evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og): dimension_{og.dimension_} {
+evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og): 
+    dimension_{og.dimension_} {
     std::cout << "copy constructor\n";
     magnitude_ = new double[dimension_];
     for (auto i = 0U; i < dimension_; ++i){
@@ -49,6 +53,14 @@ evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og): dimensi
 }
 
 //Constructor - move
+evec::EuclideanVector::EuclideanVector(evec::EuclideanVector&& og): 
+    dimension_{ std::move(og.dimension_) } {
+    std::cout << "move constructor\n";
+    magnitude_ = std::move(og.magnitude_);
+
+    og.dimension_ = 0;
+    og.magnitude_ = new double[0];
+}
 
 //Deconstructor
 evec::EuclideanVector::~EuclideanVector(){
@@ -90,6 +102,29 @@ evec::EuclideanVector& evec::EuclideanVector::operator/= (const double& b){
     return *this;
 }
 
+//Type casting to vector
+evec::EuclideanVector::operator std::vector<double>() const{
+    std::cout << "typecasting to vector\n";
+    std::vector<double> cast_vec;
+
+    for (auto i = 0U; i < dimension_; ++i){
+        cast_vec.push_back(magnitude_[i]);
+    }
+
+    return cast_vec;
+}
+
+//Type casting to list
+evec::EuclideanVector::operator std::list<double>() const{
+    std::cout << "typecasting to list\n";
+    std::list<double> cast_l;
+    for (auto i = 0U; i < dimension_; ++i){
+        cast_l.push_back(magnitude_[i]);
+    }
+
+    return cast_l;
+}
+
 //Euclidean Norm
 double evec::EuclideanVector::getEuclideanNorm() const{
     double norm = 0;
@@ -100,6 +135,7 @@ double evec::EuclideanVector::getEuclideanNorm() const{
     return norm;
 }
 
+//Create Unit Vector
 evec::EuclideanVector evec::EuclideanVector::createUnitVector() const{
     auto norm = getEuclideanNorm();
     assert (norm != 0);
