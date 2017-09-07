@@ -10,7 +10,6 @@ evec::EuclideanVector::EuclideanVector(unsigned int dim):
 //Constructor - Part 2 - Basic
 evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag): 
     dimension_{dim} {
-    std::cout << "Constructing with dim and mag\n";
     magnitude_ = new double[dim];
     
     for (auto i = 0U; i < dimension_; ++i)
@@ -21,14 +20,12 @@ evec::EuclideanVector::EuclideanVector(unsigned int dim, double mag):
 
 //Constructor - Part 3 - Iterator
 evec::EuclideanVector::EuclideanVector(std::list<double>::iterator start, std::list<double>::iterator end){
-    std::cout << "List iterator constructor\n";
     dimension_ = std::distance(start, end);
     magnitude_ = new double[dimension_];
     std::copy(start, end, magnitude_);
 }
 
 evec::EuclideanVector::EuclideanVector(std::vector<double>::iterator start, std::vector<double>::iterator end){
-    std::cout << "Vector iterator constructor\n";
     dimension_ = std::distance(start, end);
     magnitude_ = new double[dimension_];
     std::copy(start, end, magnitude_);
@@ -36,7 +33,6 @@ evec::EuclideanVector::EuclideanVector(std::vector<double>::iterator start, std:
 
 //Constructor - Part 4 - initialiser list
 evec::EuclideanVector::EuclideanVector(std::initializer_list<double> mag){
-    std::cout << "Initializer list constructor\n";
     dimension_ = std::distance(mag.begin(),mag.end());
     magnitude_ = new double[dimension_];
     std::copy(mag.begin(), mag.end(), magnitude_);
@@ -45,7 +41,6 @@ evec::EuclideanVector::EuclideanVector(std::initializer_list<double> mag){
 //Constructor - copy
 evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og): 
     dimension_{og.dimension_} {
-    std::cout << "copy constructor\n";
     magnitude_ = new double[dimension_];
     for (auto i = 0U; i < dimension_; ++i){
         magnitude_[i] = og.magnitude_[i];
@@ -55,7 +50,6 @@ evec::EuclideanVector::EuclideanVector(const evec::EuclideanVector& og):
 //Constructor - move
 evec::EuclideanVector::EuclideanVector(evec::EuclideanVector&& og): 
     dimension_{ std::move(og.dimension_) } {
-    std::cout << "move constructor\n";
     magnitude_ = std::move(og.magnitude_);
 
     og.dimension_ = 0;
@@ -64,8 +58,33 @@ evec::EuclideanVector::EuclideanVector(evec::EuclideanVector&& og):
 
 //Deconstructor
 evec::EuclideanVector::~EuclideanVector(){
-    std::cout << "Deconstructing\n";
     delete [] magnitude_;
+}
+
+//Copy assignment
+evec::EuclideanVector& evec::EuclideanVector::operator= (const evec::EuclideanVector& b){
+    if (*this != b){
+        if(magnitude_){ delete [] magnitude_; }
+        dimension_ = b.dimension_;
+        magnitude_ = new double[dimension_];
+
+        for (auto i = 0U; i < dimension_; ++i){
+            magnitude_[i] = b.magnitude_[i];
+        }
+    }
+    return *this;
+}
+
+//Move assignment
+evec::EuclideanVector& evec::EuclideanVector::operator= (evec::EuclideanVector&& b){
+    if (*this != b){
+        if(magnitude_){ delete [] magnitude_; }
+        dimension_ = std::move(b.dimension_);
+        magnitude_ = std::move(b.magnitude_);
+    }
+    b.dimension_ = 0;
+    b.magnitude_ = new double[0];
+    return *this;
 }
 
 //Operator +=
@@ -104,7 +123,6 @@ evec::EuclideanVector& evec::EuclideanVector::operator/= (const double& b){
 
 //Type casting to vector
 evec::EuclideanVector::operator std::vector<double>() const{
-    std::cout << "typecasting to vector\n";
     std::vector<double> cast_vec;
 
     for (auto i = 0U; i < dimension_; ++i){
@@ -116,7 +134,6 @@ evec::EuclideanVector::operator std::vector<double>() const{
 
 //Type casting to list
 evec::EuclideanVector::operator std::list<double>() const{
-    std::cout << "typecasting to list\n";
     std::list<double> cast_l;
     for (auto i = 0U; i < dimension_; ++i){
         cast_l.push_back(magnitude_[i]);
@@ -148,7 +165,6 @@ evec::EuclideanVector evec::EuclideanVector::createUnitVector() const{
 
 //Operator <<
 std::ostream& evec::operator<<(std::ostream& out, const evec::EuclideanVector& b){
-    assert(b.dimension_ != 0);
     auto dim = b.dimension_;
     out << "[";
     for (auto i = 0U; i < dim; i++){

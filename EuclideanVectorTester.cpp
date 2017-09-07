@@ -29,6 +29,7 @@ int main() {
         std::cout << "e == e2 is true\n";
     }
 
+    std::cout << "\n";
 	// use the copy constructor
 	evec::EuclideanVector f{e};
 	
@@ -39,10 +40,10 @@ int main() {
 	std::cout << e << std::endl;
 	std::cout << f << std::endl;
 
-	// // test the move constructor
-	// evec::EuclideanVector g = std::move(f);
-	// std::cout << g << std::endl;
-	// std::cout << f << std::endl;
+	// test the move constructor
+	evec::EuclideanVector g = std::move(f);
+	std::cout << g << std::endl;
+	std::cout << f << std::endl;
 
 	// // try operator overloading
 	// e += d;

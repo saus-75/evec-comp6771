@@ -38,15 +38,15 @@ namespace evec {
         //destructor
         ~EuclideanVector();
 
-        //operators
+        //member operators
+        EuclideanVector& operator= (const EuclideanVector& b);
+        EuclideanVector& operator= (EuclideanVector&& b);
         EuclideanVector& operator+= (const EuclideanVector& b);
         EuclideanVector& operator-= (const EuclideanVector& b);
         EuclideanVector& operator*= (const double& b);
         EuclideanVector& operator/= (const double& b);
         inline double operator[] (const unsigned int& b) const { assert(b < dimension_); return this->magnitude_[b]; }
         inline double& operator[] (const unsigned int& b) { assert(b < dimension_); return this->magnitude_[b]; }
-
-        //type casting
         operator std::vector<double>() const;
         operator std::list<double>() const;
 
