@@ -201,3 +201,58 @@ bool evec::operator!=(const evec::EuclideanVector& a, const evec::EuclideanVecto
     }
 }
 
+//Operator +
+evec::EuclideanVector evec::operator+(evec::EuclideanVector a, const evec::EuclideanVector& b){
+    assert(a.dimension_ == b.dimension_);
+    for (auto i = 0U; i < a.dimension_; i++){
+        a.magnitude_[i] += b.magnitude_[i];
+    }
+    return a;
+}
+
+//Operator -
+evec::EuclideanVector evec::operator-(evec::EuclideanVector a, const evec::EuclideanVector& b){
+    assert(a.dimension_ == b.dimension_);
+    for (auto i = 0U; i < a.dimension_; i++){
+        a.magnitude_[i] -= b.magnitude_[i];
+    }
+    return a;
+}
+
+//Operator *
+
+//1.0
+double evec::operator*(const evec::EuclideanVector& a, const evec::EuclideanVector& b){
+    assert(a.dimension_ == b.dimension_);
+    double sol = 0;
+    for (auto i = 0U; i < a.dimension_; i++){
+        sol += a.magnitude_[i] * b.magnitude_[i];
+    }
+    return sol;
+}
+
+//2.1
+evec::EuclideanVector evec::operator*(evec::EuclideanVector a, const double& b){
+    for (auto i = 0U; i < a.dimension_; i++){
+        a.magnitude_[i] *= b;
+    }
+    return a;
+}
+
+//2.2
+evec::EuclideanVector evec::operator*(const double& b, evec::EuclideanVector a){
+    for (auto i = 0U; i < a.dimension_; i++){
+        a.magnitude_[i] *= b;
+    }
+    return a;
+}
+
+//Operator /
+evec::EuclideanVector evec::operator/(evec::EuclideanVector a, const double& b){
+    assert(b != 0);
+    for (auto i = 0U; i < a.dimension_; i++){
+        a.magnitude_[i] /= b;
+    }
+    return a;
+}
+

@@ -66,6 +66,12 @@ namespace evec {
         friend std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);
         friend bool operator==(const EuclideanVector& a, const EuclideanVector& b);
         friend bool operator!=(const EuclideanVector& a, const EuclideanVector& b);
+        friend EuclideanVector operator+(EuclideanVector a, const EuclideanVector& b);
+        friend EuclideanVector operator-(EuclideanVector a, const EuclideanVector& b);
+        friend double operator*(const EuclideanVector& a, const EuclideanVector& b);
+        friend EuclideanVector operator*(EuclideanVector a, const double& b);
+        friend EuclideanVector operator*(const double& b, EuclideanVector a);
+        friend EuclideanVector operator/(EuclideanVector a, const double& b);
 
     private:        
         unsigned int dimension_;
@@ -76,6 +82,12 @@ namespace evec {
     std::ostream& operator<<(std::ostream& out, const EuclideanVector& b);  
     bool operator==(const EuclideanVector& a, const EuclideanVector& b);
     bool operator!=(const EuclideanVector& a, const EuclideanVector& b);
+    EuclideanVector operator+(EuclideanVector a, const EuclideanVector& b);
+    EuclideanVector operator-(EuclideanVector a, const EuclideanVector& b);
+    double operator*(const EuclideanVector& a, const EuclideanVector& b);
+    EuclideanVector operator*(EuclideanVector a, const double& b);
+    EuclideanVector operator*(const double& b, EuclideanVector a);
+    EuclideanVector operator/(EuclideanVector a, const double& b);
 
 }
 
